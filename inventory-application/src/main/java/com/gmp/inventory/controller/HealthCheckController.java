@@ -1,5 +1,6 @@
 package com.gmp.inventory.controller;
 
+import com.gmp.inventory.constants.ApiPaths;
 import jakarta.ws.rs.core.MediaType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON)
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class HealthCheckController {
 
-    @GetMapping("v1/healthCheck")
+    @GetMapping(value = ApiPaths.HEALTH_CHECK, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<String> healthCheck() {
         return new ResponseEntity<>("gmp-inventory-management is Up!", HttpStatus.OK);
     }
