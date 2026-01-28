@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Mrigank Tandon
  */
 @Entity
-@Table(name = "inventory_location", schema = "inventory_management")
+@Table(name = "inventory_location")
 @Getter
 @Setter
 @NoArgsConstructor

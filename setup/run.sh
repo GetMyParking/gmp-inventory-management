@@ -25,7 +25,6 @@ declare -a env_vars=(
   "RABBITMQ_PASSWORD"
   "LEAK_DETECTION_THRESHOLD"
   "ALLOWED_ORIGINS"
-  "GO_AUTH_ENABLED"
 )
 
 # Extract and export environment variables using jq
@@ -92,4 +91,4 @@ echo "ENVIRONMENT :"$ENVIRONMENT
 echo "APM :"$APM
 
 
-java $APM -Dfile.encoding=UTF-8 -Xlog:gc*:/var/log/inventory-management/gc.out -Darchaius.configurationSource.additionalUrls=file://$BASE_PATH/application.properties -Djava.net.preferIPv4Stack=true -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -jar $BASE_PATH/inventory-application-*.jar -Dspring.config.location=file://$BASE_PATH/application.properties
+java $APM -Dfile.encoding=UTF-8 -Xlog:gc*:/var/log/inventory-management/gc.out -Djava.net.preferIPv4Stack=true -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -jar $BASE_PATH/inventory-application-*.jar -Dspring.config.location=file://$BASE_PATH/application.properties

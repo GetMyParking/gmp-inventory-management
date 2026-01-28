@@ -22,7 +22,6 @@ ADD inventory-application/src/main/resources/config/application.properties /usr/
 RUN mkdir /var/log/inventory-management
 # copy GC.out
 ADD setup/gc.out /var/log/inventory-management/
-ADD setup/newrelic.* /usr/share/service/
 #copying elastic apm jar
 ADD setup/elastic-apm-agent-1.51.0.jar /usr/share/service/
 # copying runner script

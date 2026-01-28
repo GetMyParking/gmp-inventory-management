@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.gmp.entities.request.RequestHeaders.HEADER_GMP_TENANT;
-import static com.gmp.inventory.constants.ApiPaths.*;
 import static com.gmp.spring.constants.RequestHeaderConstants.TENANT;
 
 /**
@@ -23,13 +22,13 @@ import static com.gmp.spring.constants.RequestHeaderConstants.TENANT;
  */
 @RestController
 @Slf4j
-@RequestMapping(INVENTORY_BASE)
+@RequestMapping("/v1/inventory")
 @RequiredArgsConstructor
 public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    @GetMapping(value = ITEMS, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/items", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<Inventory>> getAllInventories(
             @RequestParam Integer companyId,
             @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
@@ -37,7 +36,7 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryService.getAllInventories(companyId, tenantValue));
     }
     
-    @GetMapping(value = ITEMS_ID, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/items/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Inventory> getInventoryById(
             @PathVariable Long id,
             @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
@@ -45,7 +44,7 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryService.getInventoryById(id, tenantValue));
     }
     
-    @PostMapping(value = ITEMS, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping(value = "/items", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Inventory> createInventory(
             @RequestBody Inventory inventory,
             @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
@@ -54,7 +53,7 @@ public class InventoryController {
                 .body(inventoryService.createInventory(inventory, tenantValue));
     }
     
-    @PutMapping(value = ITEMS_ID, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PutMapping(value = "/items/{id}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Inventory> updateInventory(
             @PathVariable Long id,
             @RequestBody Inventory inventory,
@@ -63,7 +62,7 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryService.updateInventory(id, inventory, tenantValue));
     }
     
-    @DeleteMapping(value = ITEMS_ID, produces = MediaType.APPLICATION_JSON)
+    @DeleteMapping(value = "/items/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Void> deleteInventory(
             @PathVariable Long id,
             @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
@@ -72,7 +71,7 @@ public class InventoryController {
         return ResponseEntity.noContent().build();
     }
     
-    @GetMapping(value = ITEMS_SEARCH, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/items/search", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<Inventory>> searchInventories(
             @RequestParam(required = false) Integer companyId,
             @RequestParam(required = false) Integer branchId,
@@ -83,7 +82,7 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryService.findInventoriesWithFilters(companyId, branchId, category, status, tenantValue));
     }
     
-    @GetMapping(value = ITEMS_BRANCH_ID, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/items/branch/{branchId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<Inventory>> getInventoriesByBranchId(
             @PathVariable Integer branchId,
             @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
@@ -91,7 +90,7 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryService.getInventoriesByBranchId(branchId, tenantValue));
     }
     
-    @GetMapping(value = ITEMS_LOCATION_ID, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/items/location/{locationId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<Inventory>> getInventoriesByLocationId(
             @PathVariable Long locationId,
             @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
@@ -99,7 +98,7 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryService.getInventoriesByLocationId(locationId, tenantValue));
     }
     
-    @GetMapping(value = ITEMS_SERIAL, produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/items/serial", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Inventory> getInventoryBySerialNumber(
             @RequestParam String serialPrefix,
             @RequestParam String serialNo,

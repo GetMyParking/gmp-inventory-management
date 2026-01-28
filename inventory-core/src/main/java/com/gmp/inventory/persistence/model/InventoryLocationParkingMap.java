@@ -10,7 +10,7 @@ import lombok.*;
  * @author Mrigank Tandon
  */
 @Entity
-@Table(name = "inventory_location_parking_map", schema = "inventory_management")
+@Table(name = "inventory_location_parking_map")
 @Getter
 @Setter
 @NoArgsConstructor
