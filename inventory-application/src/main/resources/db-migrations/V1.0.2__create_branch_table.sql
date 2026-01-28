@@ -1,0 +1,3 @@
+-- Branch table will be created in parking schema
+-- This migration is a placeholder to document that branch table exists in parking schema
+-- Branch table should be created in parking service migrations
