@@ -1,6 +1,7 @@
 package com.gmp.inventory.controller;
 
-import com.gmp.inventory.api.Inventory;
+import com.gmp.inventory.api.request.InventoryRequestDTO;
+import com.gmp.inventory.api.response.InventoryResponseDTO;
 import com.gmp.inventory.service.interfaces.InventoryService;
 import jakarta.ws.rs.core.MediaType;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,9 @@ import static com.gmp.entities.request.RequestHeaders.HEADER_GMP_TENANT;
 import static com.gmp.spring.constants.RequestHeaderConstants.TENANT;
 
 /**
- * REST controller for Inventory Management
- * 
+ * REST controller for Inventory Management.
+ * DTOs only (InventoryRequestDTO, InventoryResponseDTO); literal paths, no ApiPaths constants.
+ *
  * @author Mrigank Tandon
  */
 @RestController
@@ -29,87 +31,84 @@ public class InventoryController {
     private final InventoryService inventoryService;
 
     @GetMapping(value = "/items", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<List<Inventory>> getAllInventories(
+    public ResponseEntity<List<InventoryResponseDTO>> getAllInventories(
             @RequestParam Integer companyId,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getAllInventories(companyId, tenantValue));
     }
-    
+
     @GetMapping(value = "/items/{id}", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Inventory> getInventoryById(
+    public ResponseEntity<InventoryResponseDTO> getInventoryById(
             @PathVariable Long id,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoryById(id, tenantValue));
     }
-    
+
     @PostMapping(value = "/items", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Inventory> createInventory(
-            @RequestBody Inventory inventory,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+    public ResponseEntity<InventoryResponseDTO> createInventory(
+            @RequestBody InventoryRequestDTO inventoryRequest,
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(inventoryService.createInventory(inventory, tenantValue));
+                .body(inventoryService.createInventory(inventoryRequest, tenantValue));
     }
-    
+
     @PutMapping(value = "/items/{id}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Inventory> updateInventory(
+    public ResponseEntity<InventoryResponseDTO> updateInventory(
             @PathVariable Long id,
-            @RequestBody Inventory inventory,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestBody InventoryRequestDTO inventoryRequest,
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryService.updateInventory(id, inventory, tenantValue));
+        return ResponseEntity.ok(inventoryService.updateInventory(id, inventoryRequest, tenantValue));
     }
-    
+
     @DeleteMapping(value = "/items/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Void> deleteInventory(
             @PathVariable Long id,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         inventoryService.deleteInventory(id, tenantValue);
         return ResponseEntity.noContent().build();
     }
-    
+
     @GetMapping(value = "/items/search", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<List<Inventory>> searchInventories(
+    public ResponseEntity<List<InventoryResponseDTO>> searchInventories(
             @RequestParam(required = false) Integer companyId,
             @RequestParam(required = false) Integer branchId,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String status,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.findInventoriesWithFilters(companyId, branchId, category, status, tenantValue));
     }
-    
+
     @GetMapping(value = "/items/branch/{branchId}", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<List<Inventory>> getInventoriesByBranchId(
+    public ResponseEntity<List<InventoryResponseDTO>> getInventoriesByBranchId(
             @PathVariable Integer branchId,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoriesByBranchId(branchId, tenantValue));
     }
-    
+
     @GetMapping(value = "/items/location/{locationId}", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<List<Inventory>> getInventoriesByLocationId(
+    public ResponseEntity<List<InventoryResponseDTO>> getInventoriesByLocationId(
             @PathVariable Long locationId,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoriesByLocationId(locationId, tenantValue));
     }
-    
+
     @GetMapping(value = "/items/serial", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Inventory> getInventoryBySerialNumber(
+    public ResponseEntity<InventoryResponseDTO> getInventoryBySerialNumber(
             @RequestParam String serialPrefix,
             @RequestParam String serialNo,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = false) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoryBySerialNumber(serialPrefix, serialNo, tenantValue));
     }
-    
-    /**
-     * Get tenant from header or MDC
-     */
+
     private String getTenant(String tenant) {
         if (tenant != null && !tenant.isEmpty()) {
             return tenant;
