@@ -1,0 +1,37 @@
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+!newrelic.jar
+!elastic-apm-agent-1.51.0.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Eclipse
+.classpath
+.project
+.settings/
+# Intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Mac
+.DS_Store
+
+# Markdown (don't push)
+*.md
+
+# Maven
+target/
+dependency-reduced-pom.xml
+logs/
+
+*pom.xml.versionsBackup
