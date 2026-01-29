@@ -18,7 +18,6 @@ import static com.gmp.spring.constants.RequestHeaderConstants.TENANT;
 
 /**
  * REST controller for Inventory Management.
- * DTOs only (InventoryRequestDTO, InventoryResponseDTO); literal paths, no ApiPaths constants.
  *
  * @author Mrigank Tandon
  */
