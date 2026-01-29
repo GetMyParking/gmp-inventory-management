@@ -26,7 +26,7 @@ ADD setup/gc.out /var/log/inventory-management/
 ADD setup/elastic-apm-agent-1.51.0.jar /usr/share/service/
 # copying runner script
 ADD setup/run.sh /usr/share/service/
-EXPOSE 8060
+EXPOSE 8090
 WORKDIR /usr/share/service/
 # Running the server
 CMD bash /usr/share/service/run.sh $envDir $ServiceName
