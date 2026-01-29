@@ -32,7 +32,7 @@ public class InventoryController {
     @GetMapping(value = "/items", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<InventoryResponseDTO>> getAllInventories(
             @RequestParam Integer companyId,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getAllInventories(companyId, tenantValue));
     }
@@ -40,7 +40,7 @@ public class InventoryController {
     @GetMapping(value = "/items/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<InventoryResponseDTO> getInventoryById(
             @PathVariable Long id,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoryById(id, tenantValue));
     }
@@ -48,7 +48,7 @@ public class InventoryController {
     @PostMapping(value = "/items", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<InventoryResponseDTO> createInventory(
             @RequestBody InventoryRequestDTO inventoryRequest,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(inventoryService.createInventory(inventoryRequest, tenantValue));
@@ -58,7 +58,7 @@ public class InventoryController {
     public ResponseEntity<InventoryResponseDTO> updateInventory(
             @PathVariable Long id,
             @RequestBody InventoryRequestDTO inventoryRequest,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.updateInventory(id, inventoryRequest, tenantValue));
     }
@@ -66,7 +66,7 @@ public class InventoryController {
     @DeleteMapping(value = "/items/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Void> deleteInventory(
             @PathVariable Long id,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         inventoryService.deleteInventory(id, tenantValue);
         return ResponseEntity.noContent().build();
@@ -78,7 +78,7 @@ public class InventoryController {
             @RequestParam(required = false) Integer branchId,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String status,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.findInventoriesWithFilters(companyId, branchId, category, status, tenantValue));
     }
@@ -86,7 +86,7 @@ public class InventoryController {
     @GetMapping(value = "/items/branch/{branchId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<InventoryResponseDTO>> getInventoriesByBranchId(
             @PathVariable Integer branchId,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoriesByBranchId(branchId, tenantValue));
     }
@@ -94,7 +94,7 @@ public class InventoryController {
     @GetMapping(value = "/items/location/{locationId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<InventoryResponseDTO>> getInventoriesByLocationId(
             @PathVariable Long locationId,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoriesByLocationId(locationId, tenantValue));
     }
@@ -103,7 +103,7 @@ public class InventoryController {
     public ResponseEntity<InventoryResponseDTO> getInventoryBySerialNumber(
             @RequestParam String serialPrefix,
             @RequestParam String serialNo,
-            @RequestHeader(value = HEADER_GMP_TENANT, required = true) String tenant) {
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         String tenantValue = getTenant(tenant);
         return ResponseEntity.ok(inventoryService.getInventoryBySerialNumber(serialPrefix, serialNo, tenantValue));
     }
