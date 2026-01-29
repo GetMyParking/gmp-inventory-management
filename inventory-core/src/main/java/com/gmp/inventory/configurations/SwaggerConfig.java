@@ -1,31 +1,31 @@
-//package com.gmp.inventory.configurations;
-//
-//import io.swagger.v3.oas.models.OpenAPI;
-//import io.swagger.v3.oas.models.info.Info;
-//import io.swagger.v3.oas.models.servers.Server;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-//import java.util.List;
-//
-///**
-// * Swagger/OpenAPI configuration
-// * Server URLs are dynamically resolved from request context
-// *
-// * @author Mrigank Tandon
-// */
-//@Configuration
-//public class SwaggerConfig {
-//
-//    @Bean
-//    public OpenAPI customOpenAPI() {
-//        return new OpenAPI()
-//                .info(new Info()
-//                        .title("GMP Inventory Management API")
-//                        .version("1.0.0")
-//                        .description("API documentation for GMP Inventory Management Service"))
-//                .servers(List.of(
-//                        new Server().url("/").description("Current Server (Dynamic)")
-//                ));
-//    }
-//}
+package com.gmp.inventory.configurations;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+
+/**
+ * Swagger/OpenAPI configuration
+ * Server URLs are dynamically resolved from request context
+ *
+ * @author Mrigank Tandon
+ */
+@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("GMP Inventory Management API")
+                        .version("1.0.0")
+                        .description("API documentation for GMP Inventory Management Service"))
+                .servers(List.of(
+                        new Server().url("/").description("Current Server (Dynamic)")
+                ));
+    }
+}

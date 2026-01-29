@@ -25,6 +25,7 @@ declare -a env_vars=(
   "RABBITMQ_PASSWORD"
   "LEAK_DETECTION_THRESHOLD"
   "ALLOWED_ORIGINS"
+  "SWAGGER_ENABLED"
 )
 
 # Extract and export environment variables using jq

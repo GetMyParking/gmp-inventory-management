@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -33,7 +32,6 @@ public class BaseEntity implements Serializable {
     @Column(name = "deleted", nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
     protected Integer deleted = 0;
 
-    @NotNull
     @Column(name = "tenant", nullable = false, length = 255)
     private String tenant;
 }
