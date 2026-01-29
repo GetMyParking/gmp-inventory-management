@@ -10,4 +10,13 @@
 
     <artifactId>inventory-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <dependencies>
+        <!-- Ensures validation API is on classpath when app runs (needed for SpringDoc /v3/api-docs) -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+    </dependencies>
 </project>
