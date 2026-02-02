@@ -5,8 +5,8 @@
     {
       "name": "gmp-search-ws",
       "image": "%DOCKER_REPO%/gmp-inventory-management:%REVISION%",
-      "cpu": 1200,
-      "memory": 1500,
+      "cpu": 400,
+      "memory": 500,
       "dependsOn": [
         {
           "containerName": "log_router",
