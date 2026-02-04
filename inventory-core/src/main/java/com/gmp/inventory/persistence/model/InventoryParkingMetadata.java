@@ -25,7 +25,7 @@ public class InventoryParkingMetadata extends BaseEntity {
     private Long id;
 
     @Column(name = "parking_id", nullable = false)
-    private Integer parkingId;
+    private Long parkingId;
 
     @Column(name = "lead_time")
     private Integer leadTime;
@@ -43,7 +43,7 @@ public class InventoryParkingMetadata extends BaseEntity {
     private Integer mailLeadTime;
 
     @Column(name = "mail_charges")
-    private Integer mailCharges;
+    private Long mailChargesInCents;
 
     @Column(name = "is_courier_available", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isCourierAvailable;
@@ -52,5 +52,5 @@ public class InventoryParkingMetadata extends BaseEntity {
     private Integer courierLeadTime;
 
     @Column(name = "courier_charges")
-    private Integer courierCharges;
+    private Long courierChargesInCents;
 }

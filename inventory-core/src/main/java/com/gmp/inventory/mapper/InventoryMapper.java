@@ -26,11 +26,11 @@ public class InventoryMapper {
         if (entity == null) {
             return null;
         }
-        InventoryResponseDTO dto = modelMapper.map(entity, InventoryResponseDTO.class);
-        dto.setId(entity.getId() != null ? entity.getId().intValue() : null);
-        dto.setInventoryLocationId(entity.getInventoryLocationId() != null ? entity.getInventoryLocationId().intValue() : null);
-        dto.setEntityId(entity.getEntityId() != null ? entity.getEntityId().intValue() : null);
-        return dto;
+        InventoryResponseDTO inventoryResponseDTO = modelMapper.map(entity, InventoryResponseDTO.class);
+        inventoryResponseDTO.setId(entity.getId() != null ? entity.getId() : null);
+        inventoryResponseDTO.setInventoryLocationId(entity.getInventoryLocationId() != null ? entity.getInventoryLocationId() : null);
+        inventoryResponseDTO.setEntityId(entity.getEntityId() != null ? entity.getEntityId() : null);
+        return inventoryResponseDTO;
     }
 
     /**
@@ -53,19 +53,19 @@ public class InventoryMapper {
     /**
      * Update existing entity from request DTO (for update). Does not change id, tenant, or audit fields.
      */
-    public void updateEntityFromRequest(Inventory entity, InventoryRequestDTO dto) {
-        if (entity == null || dto == null) {
+    public void updateEntityFromRequest(Inventory inventory, InventoryRequestDTO inventoryRequestDTO) {
+        if (inventory == null || inventoryRequestDTO == null) {
             return;
         }
-        entity.setType(dto.getType());
-        entity.setBranchId(dto.getBranchId());
-        entity.setCompanyId(dto.getCompanyId());
-        entity.setCategory(dto.getCategory());
-        entity.setSerialPrefix(dto.getSerialPrefix());
-        entity.setSerialNo(dto.getSerialNo());
-        entity.setInventoryLocationId(dto.getInventoryLocationId() != null ? dto.getInventoryLocationId().longValue() : null);
-        entity.setInventoryStatus(dto.getInventoryStatus());
-        entity.setEntityType(dto.getEntityType());
-        entity.setEntityId(dto.getEntityId() != null ? dto.getEntityId().longValue() : null);
+        inventory.setType(inventoryRequestDTO.getType());
+        inventory.setBranchId(inventoryRequestDTO.getBranchId());
+        inventory.setCompanyId(inventoryRequestDTO.getCompanyId());
+        inventory.setCategory(inventoryRequestDTO.getCategory());
+        inventory.setSerialPrefix(inventoryRequestDTO.getSerialPrefix());
+        inventory.setSerialNo(inventoryRequestDTO.getSerialNo());
+        inventory.setInventoryLocationId(inventoryRequestDTO.getInventoryLocationId() != null ? inventoryRequestDTO.getInventoryLocationId().longValue() : null);
+        inventory.setInventoryStatus(inventoryRequestDTO.getInventoryStatus());
+        inventory.setEntityType(inventoryRequestDTO.getEntityType());
+        inventory.setEntityId(inventoryRequestDTO.getEntityId() != null ? inventoryRequestDTO.getEntityId().longValue() : null);
     }
 }

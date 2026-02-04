@@ -28,5 +28,5 @@ public class InventoryLocationParkingMap extends BaseEntity {
     private Long inventoryLocationId;
 
     @Column(name = "parking_id", nullable = false)
-    private Integer parkingId;
+    private Long parkingId;
 }
