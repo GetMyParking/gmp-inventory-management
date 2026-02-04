@@ -28,10 +28,10 @@ public class Inventory extends BaseEntity {
     private String type;
 
     @Column(name = "branch_id")
-    private Integer branchId;
+    private Long branchId;
 
     @Column(name = "company_id")
-    private Integer companyId;
+    private Long companyId;
 
     @Column(name = "category", length = 50)
     private String category;

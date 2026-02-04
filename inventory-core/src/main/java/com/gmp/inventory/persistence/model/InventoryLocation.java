@@ -29,7 +29,7 @@ public class InventoryLocation extends BaseEntity {
     private Long id;
 
     @Column(name = "branch_id")
-    private Integer branchId;
+    private Long branchId;
 
     @Column(name = "name", nullable = false, length = 255)
     private String name;
@@ -45,5 +45,5 @@ public class InventoryLocation extends BaseEntity {
     private Map<String, Object> metadata;
 
     @Column(name = "parking_id")
-    private Integer parkingId;
+    private Long parkingId;
 }

@@ -1,5 +1,7 @@
 package com.gmp.inventory.persistence.model;
 
+import com.gmp.inventory.api.enums.InventoryCategory;
+import com.gmp.inventory.api.enums.InventoryPricingLevel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,23 +30,26 @@ public class InventoryPricing extends BaseEntity {
     private String type;
 
     @Column(name = "branch_id")
-    private Integer branchId;
+    private Long branchId;
 
     @Column(name = "parking_id")
-    private Integer parkingId;
+    private Long parkingId;
 
     @Column(name = "permit_master_id")
     private Long permitMasterId;
 
     @Column(name = "activation_fee")
-    private Integer activationFee;
+    private Long activationFeeInCents;
 
     @Column(name = "deposit_fee")
-    private Integer depositFee;
+    private Long depositFeeInCents;
 
     @Column(name = "category", length = 50)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private InventoryCategory category;
 
-    @Column(name = "supported", columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean supported;
+    @Column(name = "level", length = 50)
+    @Enumerated(EnumType.STRING)
+    private InventoryPricingLevel level;
+
 }
