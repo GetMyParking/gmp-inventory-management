@@ -14,8 +14,8 @@ ARG SERVICE_NAME
 ENV ServiceName=$SERVICE_NAME
 # create application folder
 RUN mkdir -p /usr/share/service
-# copying the jar in application folder
-ADD inventory-application/target/inventory-application-*.jar  /usr/share/service/
+
+ADD inventory-application/target/inventory-application-0.0.1-SNAPSHOT.jar /usr/share/service/
 # copying the config and properties file
 ADD inventory-application/src/main/resources/config/application.properties /usr/share/service/
 # create the volume to persist the logs
