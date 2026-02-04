@@ -1,0 +1,68 @@
+{
+  "family": "gmp-inventory-management",
+  "networkMode": "bridge",
+  "containerDefinitions": [
+    {
+      "name": "gmp-inventory-management",
+      "image": "%DOCKER_REPO%/gmp-inventory-management:%REVISION%",
+      "cpu": 400,
+      "memory": 500,
+      "dependsOn": [
+        {
+          "containerName": "log_router",
+          "condition": "START"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awsfirelens",
+        "options": {
+          "AWS_Region": "eu-central-1",
+          "Suppress_Type_Name": "On",
+          "Port": "443",
+          "Host": "%OPENSEARCH_URL%",
+          "Index": "gmp-prod-fluentbit-%Y.%m.%d-%H.00",
+          "tls": "On",
+          "AWS_Auth": "On",
+          "Name": "es",
+          "Buffer_Size": "32MB"
+        }
+      },
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 0
+        }
+      ],
+      "essential": true,
+      "secrets": [
+        {
+          "valueFrom": "%SECRET_STORE_ARN%",
+          "name": "ENVIRONMENT_VARIABLES"
+        }
+      ]
+    },
+    {
+      "essential": false,
+      "name": "log_router",
+      "image": "%FLUENTBIT_IMAGE%",
+      "cpu": 64,
+      "memory": 128, 
+      "logConfiguration": {
+              "logDriver": "json-file",
+              "options": {
+                      "labels": "gmp-inventory-management",
+                      "max-file": "1",
+                      "max-size": "5m"
+              }
+      },
+      "firelensConfiguration": {
+        "type": "fluentbit",
+        "options": {
+          "config-file-type": "file",
+          "config-file-value": "/extra.conf"
+        }
+      }
+    }
+  ],
+  "executionRoleArn": "%EXECUTION_ROLE_ARN%"
+}
