@@ -92,4 +92,4 @@ echo "ENVIRONMENT :"$ENVIRONMENT
 echo "APM :"$APM
 
 
-java $APM -Dfile.encoding=UTF-8 -Xlog:gc*:/var/log/inventory-management/gc.out -Djava.net.preferIPv4Stack=true -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -jar $BASE_PATH/inventory-application-*.jar -Dspring.config.location=file://$BASE_PATH/application.properties
+(java $APM -Dfile.encoding=UTF-8 -Xlog:gc*:/var/log/inventory-management/gc.out -Djava.net.preferIPv4Stack=true -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -jar $BASE_PATH/inventory-application*.jar -Dspring.config.location=file://$BASE_PATH/application.properties)
