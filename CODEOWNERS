@@ -1,0 +1,5 @@
+# Everything requires reviews from both teams
+* @GetMyParking/global-admins
+
+# CODEOWNERS file itself can only be changed by admins
+CODEOWNERS @GetMyParking/global-admins
