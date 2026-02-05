@@ -59,4 +59,7 @@ public class Inventory extends BaseEntity {
 
     @Column(name = "sub_entity_id")
     private Long subEntityId;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
