@@ -194,15 +194,15 @@ public class InventoryPricingServiceImpl implements InventoryPricingService {
             Map<Long, InventoryLocation> locationById) {
 
         List<FulfilmentMethodDTO> result = new ArrayList<>();
-        int leadTimeMinutes = meta != null && meta.getLeadTime() != null ? meta.getLeadTime() : 0;
+        long leadTimeDays = meta != null && meta.getLeadTime() != null ? meta.getLeadTime().longValue() : 0L;
 
         boolean mailAvailable = meta != null && Boolean.TRUE.equals(meta.getIsMailAvailable());
-        int mailLeadTime = meta != null && meta.getMailLeadTime() != null ? meta.getMailLeadTime() : 0;
+        long mailLeadTimeDays = meta != null && meta.getMailLeadTime() != null ? meta.getMailLeadTime().longValue() : 0L;
         result.add(FulfilmentMethodDTO.builder()
                 .type(FulfilmentMethod.MAIL)
                 .available(mailAvailable)
                 .chargesInCents(mailAvailable && meta != null ? meta.getMailChargesInCents() : null)
-                .startDate(now.plusMinutes(leadTimeMinutes + mailLeadTime))
+                .startDate(now.plusDays(leadTimeDays + mailLeadTimeDays))
                 .pickupLocations(null)
                 .build());
 
@@ -212,17 +212,17 @@ public class InventoryPricingServiceImpl implements InventoryPricingService {
                 .type(FulfilmentMethod.PICK_UP)
                 .available(pickupAvailable)
                 .chargesInCents(null)
-                .startDate(now.plusMinutes(leadTimeMinutes))
+                .startDate(now.plusDays(leadTimeDays))
                 .pickupLocations(pickupLocations != null ? pickupLocations : Collections.emptyList())
                 .build());
 
         boolean courierAvailable = meta != null && Boolean.TRUE.equals(meta.getIsCourierAvailable());
-        int courierLeadTime = meta != null && meta.getCourierLeadTime() != null ? meta.getCourierLeadTime() : 0;
+        long courierLeadTimeDays = meta != null && meta.getCourierLeadTime() != null ? meta.getCourierLeadTime().longValue() : 0L;
         result.add(FulfilmentMethodDTO.builder()
                 .type(FulfilmentMethod.COURIER)
                 .available(courierAvailable)
                 .chargesInCents(courierAvailable && meta != null ? meta.getCourierChargesInCents() : null)
-                .startDate(now.plusMinutes(leadTimeMinutes + courierLeadTime))
+                .startDate(now.plusDays(leadTimeDays + courierLeadTimeDays))
                 .pickupLocations(null)
                 .build());
 
