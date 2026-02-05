@@ -19,9 +19,6 @@ public interface InventoryPricingRepository extends JpaRepository<InventoryPrici
 
     Optional<InventoryPricing> findByIdAndTenantAndDeleted(Long id, String tenant, Integer deleted);
 
-    @Query("SELECT p FROM InventoryPricing p WHERE p.tenant = :tenant AND p.deleted = 0")
-    List<InventoryPricing> findAllActiveByTenant(@Param("tenant") String tenant);
-
     @Query("SELECT p FROM InventoryPricing p WHERE p.branchId = :branchId AND p.tenant = :tenant AND p.deleted = 0")
     List<InventoryPricing> findActiveByBranchId(@Param("branchId") Integer branchId, @Param("tenant") String tenant);
 

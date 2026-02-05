@@ -116,14 +116,88 @@ public class InventoryController {
             @RequestParam String serialPrefix,
             @RequestParam String serialNo,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryService.getInventoryBySerialNumber(serialPrefix, serialNo, tenantValue));
+        return ResponseEntity.ok(inventoryService.getInventoryBySerialNumber(serialPrefix, serialNo, tenant));
     }
 
-    private String getTenant(String tenant) {
-        if (tenant != null && !tenant.isEmpty()) {
-            return tenant;
-        }
-        return MDC.get(TENANT);
+
+    @GetMapping(value = "/locations/{id}", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InventoryLocationResponseDTO> locationById(
+            @PathVariable Long id,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryLocationService.getById(id, tenant));
+    }
+
+    @PostMapping(value = "/locations", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InventoryLocationResponseDTO> createLocation(
+            @RequestBody InventoryLocationRequestDTO request,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(inventoryLocationService.create(request, tenant));
+    }
+
+    @PutMapping(value = "/locations/{id}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InventoryLocationResponseDTO> updateLocation(
+            @PathVariable Long id,
+            @RequestBody InventoryLocationRequestDTO request,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryLocationService.update(id, request, tenant));
+    }
+
+    @GetMapping(value = "/locations/branch/{branchId}", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<List<InventoryLocationResponseDTO>> locationsByBranchId(
+            @PathVariable Long branchId,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryLocationService.getByBranchId(branchId, tenant));
+    }
+
+    @GetMapping(value = "/parking-metadata/{id}", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InventoryParkingMetadataResponseDTO> parkingMetadataById(
+            @PathVariable Long id,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryParkingMetadataService.getById(id, tenant));
+    }
+
+    @PostMapping(value = "/parking-metadata", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InventoryParkingMetadataResponseDTO> createParkingMetadata(
+            @RequestBody InventoryParkingMetadataRequestDTO request,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(inventoryParkingMetadataService.create(request, tenant));
+    }
+
+    @GetMapping(value = "/parking-metadata/parking/{parkingId}", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<List<InventoryParkingMetadataResponseDTO>> parkingMetadataByParkingId(
+            @PathVariable Long parkingId,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryParkingMetadataService.getByParkingId(parkingId, tenant));
+    }
+
+    @GetMapping(value = "/location-parking-maps/{id}", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InventoryLocationParkingMapResponseDTO> locationParkingMapById(
+            @PathVariable Long id,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryLocationParkingMapService.getById(id, tenant));
+    }
+
+    @PostMapping(value = "/location-parking-maps", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InventoryLocationParkingMapResponseDTO> createLocationParkingMap(
+            @RequestBody InventoryLocationParkingMapRequestDTO request,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(inventoryLocationParkingMapService.create(request, tenant));
+    }
+
+    @GetMapping(value = "/location-parking-maps/location/{inventoryLocationId}", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<List<InventoryLocationParkingMapResponseDTO>> locationParkingMapsByLocationId(
+            @PathVariable Long inventoryLocationId,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryLocationParkingMapService.getByInventoryLocationId(inventoryLocationId, tenant));
+    }
+
+    @GetMapping(value = "/location-parking-maps/parking/{parkingId}", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<List<InventoryLocationParkingMapResponseDTO>> locationParkingMapsByParkingId(
+            @PathVariable Long parkingId,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        return ResponseEntity.ok(inventoryLocationParkingMapService.getByParkingId(parkingId, tenant));
     }
 }
