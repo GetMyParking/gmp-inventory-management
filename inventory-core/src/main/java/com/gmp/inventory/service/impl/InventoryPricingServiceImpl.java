@@ -1,8 +1,9 @@
 package com.gmp.inventory.service.impl;
 
 import com.gmp.inventory.api.enums.FulfilmentMethod;
-import com.gmp.inventory.api.request.PricingByPermitIdsRequest;
+import com.gmp.inventory.api.request.GetDevicesByPermitIdsRequest;
 import com.gmp.inventory.api.request.InventoryPricingRequestDTO;
+import com.gmp.inventory.api.request.PricingByPermitIdsRequest;
 import com.gmp.inventory.api.response.FulfilmentMethodDTO;
 import com.gmp.inventory.api.response.GeoLocationDTO;
 import com.gmp.inventory.api.response.InventoryPricingResponseDTO;
@@ -256,5 +257,18 @@ public class InventoryPricingServiceImpl implements InventoryPricingService {
                     .build());
         }
         return list;
+    }
+
+    @Override
+    public List<InventoryPricingResponseDTO> getDevicesByPermitIds(GetDevicesByPermitIdsRequest request, String tenant) {
+        List<Long> permitMasterIds = request.getPermitMasterIds();
+        if (permitMasterIds == null || permitMasterIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        log.debug("Fetching devices by permit master ids: {}, tenant: {}", permitMasterIds, tenant);
+        List<InventoryPricing> entities = inventoryPricingRepository.findActiveByPermitMasterIdIn(permitMasterIds, tenant);
+        return entities.stream()
+                .map(inventoryPricingMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 }

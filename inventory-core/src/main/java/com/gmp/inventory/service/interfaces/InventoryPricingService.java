@@ -1,5 +1,6 @@
 package com.gmp.inventory.service.interfaces;
 
+import com.gmp.inventory.api.request.GetDevicesByPermitIdsRequest;
 import com.gmp.inventory.api.request.InventoryPricingRequestDTO;
 import com.gmp.inventory.api.request.PricingByPermitIdsRequest;
 import com.gmp.inventory.api.response.PricingByPermitIdsResponse;
@@ -29,4 +30,6 @@ public interface InventoryPricingService {
     List<InventoryPricingResponseDTO> getByPermitMasterId(Long permitMasterId, String tenant);
 
     PricingByPermitIdsResponse getPricingByPermitIds(PricingByPermitIdsRequest request, String tenant);
+
+    List<InventoryPricingResponseDTO> getDevicesByPermitIds(GetDevicesByPermitIdsRequest request, String tenant);
 }
