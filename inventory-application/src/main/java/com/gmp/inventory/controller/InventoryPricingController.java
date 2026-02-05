@@ -1,7 +1,8 @@
 package com.gmp.inventory.controller;
 
-import com.gmp.inventory.api.request.PricingByPermitIdsRequest;
+import com.gmp.inventory.api.request.GetDevicesByPermitIdsRequest;
 import com.gmp.inventory.api.request.InventoryPricingRequestDTO;
+import com.gmp.inventory.api.request.PricingByPermitIdsRequest;
 import com.gmp.inventory.api.response.PricingByPermitIdsResponse;
 import com.gmp.inventory.api.response.InventoryPricingResponseDTO;
 import com.gmp.inventory.service.interfaces.InventoryPricingService;
@@ -99,5 +100,11 @@ public class InventoryPricingController {
         return ResponseEntity.ok(inventoryPricingService.getPricingByPermitIds(request, tenant));
     }
 
-    
+    @PostMapping(value = "/devices-by-permit-ids", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<List<InventoryPricingResponseDTO>> getDevicesByPermitIds(
+            @RequestBody @Valid GetDevicesByPermitIdsRequest request,
+            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
+        
+        return ResponseEntity.ok(inventoryPricingService.getDevicesByPermitIds(request, tenant));
+    }
 }
