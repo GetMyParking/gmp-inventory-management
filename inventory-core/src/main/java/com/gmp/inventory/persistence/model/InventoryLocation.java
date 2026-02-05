@@ -34,9 +34,6 @@ public class InventoryLocation extends BaseEntity {
     @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-    @Column(name = "address", length = 500)
-    private String address;
-
     @Column(name = "geolocation", columnDefinition = "POINT")
     private Point geolocation;
 

@@ -14,8 +14,6 @@ import java.util.List;
  */
 public interface InventoryPricingService {
 
-    List<InventoryPricingResponseDTO> getAll(String tenant);
-
     InventoryPricingResponseDTO getById(Long id, String tenant);
 
     InventoryPricingResponseDTO create(InventoryPricingRequestDTO request, String tenant);

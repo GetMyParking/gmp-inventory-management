@@ -53,4 +53,10 @@ public class Inventory extends BaseEntity {
 
     @Column(name = "entity_id")
     private Long entityId;
+
+    @Column(name = "sub_entity_type")
+    private String subEntityType;
+
+    @Column(name = "sub_entity_id")
+    private Long subEntityId;
 }
