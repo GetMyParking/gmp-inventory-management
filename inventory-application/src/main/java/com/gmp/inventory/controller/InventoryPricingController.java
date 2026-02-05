@@ -32,28 +32,21 @@ public class InventoryPricingController {
 
     private final InventoryPricingService inventoryPricingService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<List<InventoryPricingResponseDTO>> getAll(
-            @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryPricingService.getAll(tenantValue));
-    }
-
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<InventoryPricingResponseDTO> getById(
             @PathVariable Long id,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryPricingService.getById(id, tenantValue));
+        
+        return ResponseEntity.ok(inventoryPricingService.getById(id, tenant));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<InventoryPricingResponseDTO> create(
             @RequestBody InventoryPricingRequestDTO request,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
+        
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(inventoryPricingService.create(request, tenantValue));
+                .body(inventoryPricingService.create(request, tenant));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
@@ -61,16 +54,16 @@ public class InventoryPricingController {
             @PathVariable Long id,
             @RequestBody InventoryPricingRequestDTO request,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryPricingService.update(id, request, tenantValue));
+        
+        return ResponseEntity.ok(inventoryPricingService.update(id, request, tenant));
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Void> delete(
             @PathVariable Long id,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        inventoryPricingService.delete(id, tenantValue);
+        
+        inventoryPricingService.delete(id, tenant);
         return ResponseEntity.noContent().build();
     }
 
@@ -78,38 +71,33 @@ public class InventoryPricingController {
     public ResponseEntity<List<InventoryPricingResponseDTO>> getByBranchId(
             @PathVariable Integer branchId,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryPricingService.getByBranchId(branchId, tenantValue));
+        
+        return ResponseEntity.ok(inventoryPricingService.getByBranchId(branchId, tenant));
     }
 
     @GetMapping(value = "/parking/{parkingId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<InventoryPricingResponseDTO>> getByParkingId(
             @PathVariable Integer parkingId,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryPricingService.getByParkingId(parkingId, tenantValue));
+        
+        return ResponseEntity.ok(inventoryPricingService.getByParkingId(parkingId, tenant));
     }
 
     @GetMapping(value = "/permit-master/{permitMasterId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<InventoryPricingResponseDTO>> getByPermitMasterId(
             @PathVariable Long permitMasterId,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryPricingService.getByPermitMasterId(permitMasterId, tenantValue));
+        
+        return ResponseEntity.ok(inventoryPricingService.getByPermitMasterId(permitMasterId, tenant));
     }
 
     @PostMapping(value = "/by-permit-ids", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<PricingByPermitIdsResponse> getPricingByPermitIds(
             @RequestBody @Valid PricingByPermitIdsRequest request,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
-        String tenantValue = getTenant(tenant);
-        return ResponseEntity.ok(inventoryPricingService.getPricingByPermitIds(request, tenantValue));
+        
+        return ResponseEntity.ok(inventoryPricingService.getPricingByPermitIds(request, tenant));
     }
 
-    private String getTenant(String tenant) {
-        if (tenant != null && !tenant.isEmpty()) {
-            return tenant;
-        }
-        return MDC.get(TENANT);
-    }
+    
 }
