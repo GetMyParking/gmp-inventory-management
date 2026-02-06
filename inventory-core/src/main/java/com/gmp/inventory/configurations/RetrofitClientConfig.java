@@ -21,7 +21,7 @@ public class RetrofitClientConfig {
     @Bean
     public ParkingClient parkingClient(SpringRetrofitServiceClientFactory springRetrofitServiceClientFactory) {
         log.info("Creating ParkingClient bean");
-        return springRetrofitServiceClientFactory.getClientForService("parking_url", ParkingClient.class);
+        return springRetrofitServiceClientFactory.getClientForService("parking.url", ParkingClient.class);
     }
 
     @Bean
