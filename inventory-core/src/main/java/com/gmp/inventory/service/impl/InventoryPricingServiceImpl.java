@@ -11,6 +11,7 @@ import com.gmp.inventory.api.response.ParkingPricingGroupDTO;
 import com.gmp.inventory.api.response.PermitPricingGroupDTO;
 import com.gmp.inventory.api.response.PickupLocationDTO;
 import com.gmp.inventory.api.response.PricingByPermitIdsResponse;
+import com.gmp.inventory.client.ParkingClient;
 import com.gmp.inventory.mapper.InventoryPricingMapper;
 import com.gmp.inventory.persistence.model.InventoryLocation;
 import com.gmp.inventory.persistence.model.InventoryLocationParkingMap;
@@ -23,10 +24,13 @@ import com.gmp.inventory.repository.interfaces.InventoryPricingRepository;
 import com.gmp.inventory.service.interfaces.InventoryPricingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import com.gmp.parking.entities.Parking;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
+import retrofit2.Response;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -47,6 +51,7 @@ public class InventoryPricingServiceImpl implements InventoryPricingService {
     private final InventoryParkingMetadataRepository inventoryParkingMetadataRepository;
     private final InventoryLocationParkingMapRepository inventoryLocationParkingMapRepository;
     private final InventoryLocationRepository inventoryLocationRepository;
+    private final ParkingClient parkingClient;
 
     @Override
     public InventoryPricingResponseDTO getById(Long id, String tenant) {
@@ -160,10 +165,13 @@ public class InventoryPricingServiceImpl implements InventoryPricingService {
                     .add(inventoryPricingMapper.toResponseDTO(entity));
         }
 
+        Map<Integer, String> parkingNameByParkingId = fetchParkingNames(devicesByParkingId.keySet(), tenant);
+
         OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         List<ParkingPricingGroupDTO> parkingGroups = new ArrayList<>();
         for (Map.Entry<Long, List<InventoryPricingResponseDTO>> e : devicesByParkingId.entrySet()) {
             Long parkingId = e.getKey();
+            String parkingName = parkingId != null ? parkingNameByParkingId.get(parkingId.intValue()) : null;
             List<FulfilmentMethodDTO> fulfilmentMethods = null;
             if (includeFulfilmentDetails && requestParkingId != null && requestParkingId.equals(parkingId)) {
                 InventoryParkingMetadata meta = metadataByParkingId.get(parkingId);
@@ -171,6 +179,7 @@ public class InventoryPricingServiceImpl implements InventoryPricingService {
             }
             parkingGroups.add(ParkingPricingGroupDTO.builder()
                     .parkingId(parkingId)
+                    .parkingName(parkingName)
                     .devices(e.getValue())
                     .fulfilmentMethods(fulfilmentMethods)
                     .build());
@@ -257,6 +266,29 @@ public class InventoryPricingServiceImpl implements InventoryPricingService {
                     .build());
         }
         return list;
+    }
+
+    private Map<Integer, String> fetchParkingNames(Set<Long> parkingIds, String tenant) {
+        if (parkingIds == null || parkingIds.isEmpty()) return Collections.emptyMap();
+        Set<Integer> idSet = parkingIds.stream()
+                .filter(Objects::nonNull)
+                .map(Long::intValue)
+                .collect(Collectors.toSet());
+        if (idSet.isEmpty()) return Collections.emptyMap();
+        try {
+            Response<Map<Integer, Parking>> response = parkingClient.getParkingDataList(tenant, idSet).execute();
+            if (!response.isSuccessful() || response.body() == null) return Collections.emptyMap();
+            Map<Integer, String> result = new HashMap<>();
+            for (Map.Entry<Integer, Parking> entry : response.body().entrySet()) {
+                Parking p = entry.getValue();
+                String name = p != null && (p.getName() != null && !p.getName().isEmpty()) ? p.getName() : (p != null ? p.getDisplayName() : null);
+                result.put(entry.getKey(), name);
+            }
+            return result;
+        } catch (IOException e) {
+            log.warn("Failed to fetch parking names for ids {}: {}", idSet, e.getMessage());
+            return Collections.emptyMap();
+        }
     }
 
     @Override
