@@ -15,5 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class InternalInventoryController {
 
-    // Internal APIs for inventory, pricing, fulfilment to be added here
+    // Internal APIs for inventory, pricing, fulfilment, inventory-mapping to be added here
 }
