@@ -2,12 +2,12 @@ create table inventory_management.inventory_location
 (
     id                  bigserial
         constraint inventory_location_pk primary key,
-    branch_id           integer,
+    branch_id           int8,
     name                VARCHAR(255)                      not null,
     address             VARCHAR(500),
     geolocation         POINT,
     metadata            jsonb,
-    parking_id          integer,
+    parking_id          int8,
     tenant              VARCHAR(255)                      not null,
     created_at          TIMESTAMP WITH TIME ZONE default now() not null,
     updated_at          TIMESTAMP WITH TIME ZONE default now() not null,

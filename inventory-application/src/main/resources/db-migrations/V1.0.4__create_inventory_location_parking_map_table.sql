@@ -2,8 +2,8 @@ create table inventory_management.inventory_location_parking_map
 (
     id                      bigserial
         constraint inventory_location_parking_map_pk primary key,
-    inventory_location_id   bigint                           not null,
-    parking_id              integer                           not null,
+    inventory_location_id   int8                           not null,
+    parking_id              int8                           not null,
     tenant                  VARCHAR(255)                      not null,
     created_at              TIMESTAMP WITH TIME ZONE default now() not null,
     updated_at              TIMESTAMP WITH TIME ZONE default now() not null,

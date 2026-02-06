@@ -2,7 +2,7 @@ create table inventory_management.inventory_parking_metadata
 (
     id                      bigserial
         constraint inventory_parking_metadata_pk primary key,
-    parking_id              integer                           not null,
+    parking_id              int8                           not null,
     lead_time               INTEGER,
     return_grace_time       INTEGER,
     is_pick_up_available    BOOLEAN          default false,
