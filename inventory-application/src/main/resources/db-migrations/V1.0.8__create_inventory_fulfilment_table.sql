@@ -4,7 +4,7 @@ create table inventory_management.inventory_fulfilment
         constraint inventory_fulfilment_pk primary key,
     tracking_id             VARCHAR(255),
     method                  VARCHAR(50),
-    inventory_location_id   bigint,
+    inventory_location_id   int8,
     shipment_address        VARCHAR(500),
     tenant                  VARCHAR(255)                      not null,
     created_at              TIMESTAMP WITH TIME ZONE default now() not null,

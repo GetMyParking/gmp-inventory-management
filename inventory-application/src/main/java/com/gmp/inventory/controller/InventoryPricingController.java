@@ -86,7 +86,7 @@ public class InventoryPricingController {
 
     @GetMapping(value = "/permit-master/{permitMasterId}", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<List<InventoryPricingResponseDTO>> getByPermitMasterId(
-            @PathVariable Long permitMasterId,
+            @PathVariable(value = "permitMasterId") Long permitMasterId,
             @RequestHeader(value = HEADER_GMP_TENANT) String tenant) {
         
         return ResponseEntity.ok(inventoryPricingService.getByPermitMasterId(permitMasterId, tenant));
