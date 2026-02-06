@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class VirtualThreadConfig {
 
-    private ExecutorService virtualThreadExecutorRef;
+    private ExecutorService virtualThreadExecutor;
 
     @Bean(name = "virtualThreadExecutor")
     @ConditionalOnProperty(name = "spring.threads.virtual.enabled", havingValue = "true")
     public ExecutorService virtualThreadExecutor() {
-        this.virtualThreadExecutorRef = Executors.newVirtualThreadPerTaskExecutor();
-        return virtualThreadExecutorRef;
+        this.virtualThreadExecutor = Executors.newVirtualThreadPerTaskExecutor();
+        return virtualThreadExecutor;
     }
 }
