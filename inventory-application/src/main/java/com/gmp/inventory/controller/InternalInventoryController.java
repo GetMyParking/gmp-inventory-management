@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-@RequestMapping("/internal/v1/inventory")
+@RequestMapping("/inventory-management/internal/v1/inventory")
 @RequiredArgsConstructor
 public class InternalInventoryController {
 
