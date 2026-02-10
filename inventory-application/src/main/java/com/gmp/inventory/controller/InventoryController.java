@@ -26,7 +26,7 @@ import static com.gmp.entities.request.RequestHeaders.HEADER_GMP_TENANT;
  */
 @RestController
 @Slf4j
-@RequestMapping("/v1/inventory")
+@RequestMapping("/inventory-management/v1/inventory")
 @RequiredArgsConstructor
 public class InventoryController {
 
