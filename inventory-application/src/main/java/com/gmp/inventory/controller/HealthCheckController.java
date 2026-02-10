@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class HealthCheckController {
 
-    @GetMapping(value = "/v1/healthCheck", produces = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/inventory-management/v1/healthCheck", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<String> healthCheck() {
         return new ResponseEntity<>("gmp-inventory-management is Up!", HttpStatus.OK);
     }
